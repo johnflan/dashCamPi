@@ -3,25 +3,35 @@
 import numpy as np
 import cv2
 from time import gmtime, strftime
+import time
 
-def show_webcam(mirror=False):
-    #X264
-    fourcc = cv2.cv.CV_FOURCC(*'XVID')
-    out = cv2.VideoWriter('output.avi',fourcc, 30.0, (640,480))
+rolloverMinutes = 20
+rollover = rolloverMinutes * 60
 
-    cam = cv2.VideoCapture(0)
+
+def show_webcam():
+    print "Starting capture"
     while True:
+        timestamp = int(round(time.time()))
+        lastRollover = timestamp
+        fourcc = cv2.cv.CV_FOURCC(*'XVID')
+        filename=str(timestamp) + ".avi"
+        print "writing to " + filename
+        out = cv2.VideoWriter(filename,fourcc, 10.0, (640,480))
+        cam = cv2.VideoCapture(0)
+        cam.set(3, 640)
+        cam.set(4, 480)
+        while True:
 	    ret_val, img = cam.read()
-	    if mirror: 
-		img = cv2.flip(img, 1)
             addText(img)
             out.write(img)
-	    cv2.imshow('DashCam', img)
-	    if cv2.waitKey(1) == 27: 
-		break  # esc to quit
-    cam.release()
-    out.release()
-    cv2.destroyAllWindows()
+            if(timestamp != lastRollover and (timestamp % rollover) == 0):
+                lastRollover = timestamp
+                break
+            timestamp = int(round(time.time()))
+        cam.release()
+        out.release()
+        print "rolled over"
 
 def addText(frame):
     cv2.rectangle(frame,(10,10),(630,40),(0,0,0),-1)
@@ -30,7 +40,7 @@ def addText(frame):
     cv2.putText(frame,'DashCam - ' + timestamp ,(180,30), font,
             .5,(255,255,255),1,cv2.CV_AA)
 def main():
-    show_webcam(mirror=True)
+    show_webcam()
 
 if __name__ == '__main__':
     main()

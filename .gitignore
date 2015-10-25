@@ -56,11 +56,5 @@ docs/_build/
 # PyBuilder
 target/
 *.avi
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+*.log
 *.out
->>>>>>> Capture and file rolling mainly working
-=======
-*.out
->>>>>>> 6773cb2e87d30152aa0e08eec4e2a8384e41ce67

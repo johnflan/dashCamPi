@@ -23,8 +23,8 @@ def oldest_file_in_tree(rootfolder, extension=".avi"):
         key=lambda fn: os.stat(fn).st_mtime)
 
 def main():
-   print "Starting..."
-   while True:
+    print "Starting..."
+    while True:
         folderSizeBytes = getFolderSize("/home/pi/dashCamPi")
 	print "Folder size:\t" + str(folderSizeBytes)
         print "Threshold size:\t" + str(524288000)

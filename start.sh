@@ -1,3 +1,3 @@
 #!/bin/bash
-nohup python capture.py &
-nohup python .py &
+nohup python /home/pi/dashCamPi/capture.py &
+nohup python /home/pi/dashCamPi/removeOldestFiles.py &

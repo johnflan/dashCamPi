@@ -24,14 +24,14 @@ def show_webcam():
         filename="/home/pi/dashCamPi/" + str(timestamp) + ".avi"
         log.write("\nRolled over " + filename + "\n")
         out = cv2.VideoWriter(filename,fourcc, 10.0, (640,480))
-	log.write("VideoWriter is opened: " + str(out.isOpened()) + "\n")
+	log.write("\nVideoWriter status: " + str(out.isOpened()) + "\n")
         while True:
 	    ret_val, img = cam.read()
             addText(img)
 	    if (out.isOpened() == False):
 		log.write("Error VideoWriter is not open\n")
+		break
             out.write(img)
-	    log.write(".")
             if(timestamp != lastRollover and (timestamp % rollover) == 0):
                 lastRollover = timestamp
                 break
